@@ -1,5 +1,6 @@
 package com.example.NoteAPIPractice.controller;
 
+import com.example.NoteAPIPractice.dto.NoteDTO;
 import com.example.NoteAPIPractice.model.Note;
 import com.example.NoteAPIPractice.service.NoteService;
 import jakarta.validation.Valid;
@@ -18,10 +19,10 @@ public class NoteController {
     }
 
     @GetMapping
-    public Page<Note> getNotes(
+    public Page<NoteDTO> getNotes(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "title") String sortBy,
             @RequestParam(defaultValue = "asc") String direction) {
         return service.getAll(page, size, sortBy, direction);
     }

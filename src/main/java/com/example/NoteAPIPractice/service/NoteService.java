@@ -1,5 +1,6 @@
 package com.example.NoteAPIPractice.service;
 
+import com.example.NoteAPIPractice.dto.NoteDTO;
 import com.example.NoteAPIPractice.model.Note;
 import com.example.NoteAPIPractice.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +23,21 @@ public class NoteService {
         this.noteRepository = noteRepository;
     }
 
-    public Page<Note> getAll(int page, int size, String sortBy, String direction) {
+    public Page<NoteDTO> getAll(int page, int size, String sortBy, String direction) {
         Sort sort = direction.equalsIgnoreCase("asc")
                 ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
 
         Pageable pageable = PageRequest.of(page, size, sort);
-        return noteRepository.findAll(pageable);
+        Page<Note> notesPage = noteRepository.findAll(pageable);
+
+        return notesPage.map(note -> {
+            NoteDTO dto = new NoteDTO();
+            dto.setId(note.getId());
+            dto.setTitle(note.getTitle());
+            dto.setContent(note.getContent());
+            return dto;
+        });
     }
 
     public Note getById(Long id) { return noteRepository.findById(id).orElseThrow(); }
