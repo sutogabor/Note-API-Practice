@@ -3,6 +3,7 @@ package com.example.NoteAPIPractice.controller;
 import com.example.NoteAPIPractice.model.Note;
 import com.example.NoteAPIPractice.service.NoteService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
