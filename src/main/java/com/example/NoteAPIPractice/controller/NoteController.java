@@ -40,8 +40,8 @@ public class NoteController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) { service.delete(id); }
 
-    @GetMapping("/search?query=term")
-    public List<Note> findByTitle(String keyword) {
+    @GetMapping("/search")
+    public List<Note> findByTitle(@RequestParam String keyword) {
         return service.findByTitle(keyword);
     }
 }
