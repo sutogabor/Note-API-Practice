@@ -18,12 +18,21 @@ public class NoteController {
         this.service = service;
     }
 
+    private boolean isValidSortField(String sortBy) {
+        return sortBy.equals("title") || sortBy.equals("createdAt") || sortBy.equals("author");
+    }
+
     @GetMapping
     public Page<NoteDTO> getNotes(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "title") String sortBy,
             @RequestParam(defaultValue = "asc") String direction) {
+
+        if (!isValidSortField(sortBy)) {
+            throw new IllegalArgumentException("Invalid sort field: " + sortBy);
+        }
+
         return service.getAll(page, size, sortBy, direction);
     }
 
