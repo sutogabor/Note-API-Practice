@@ -1,9 +1,6 @@
 package com.example.NoteAPIPractice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +21,7 @@ public class Note {
     private Long id;
 
     @NotBlank
-    private String name;
+    private String title;
 
     @NotBlank
     private String author;
@@ -33,6 +30,20 @@ public class Note {
     private String content;
 
     @NotBlank
-    private LocalDate creationDate;
+    private LocalDate createdAt;
+
+    @NotBlank
+    private LocalDate updatedAt;
+
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDate.now();
+        updatedAt = LocalDate.now();
+    }
+
+    @PreUpdate
+    public void onUpdate() {
+        updatedAt = LocalDate.now();
+    }
 
 }
