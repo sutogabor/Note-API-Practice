@@ -140,6 +140,9 @@ fabric.properties
 hs_err_pid*
 replay_pid*
 
+# Ignore sensitive app config
+/src/main/resources/application.properties
+
 ### Maven ###
 target/
 pom.xml.tag

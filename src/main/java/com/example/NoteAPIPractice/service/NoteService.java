@@ -2,21 +2,34 @@ package com.example.NoteAPIPractice.service;
 
 import com.example.NoteAPIPractice.model.Note;
 import com.example.NoteAPIPractice.repository.NoteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class NoteService {
 
+    @Autowired
     private final NoteRepository noteRepository;
 
     public NoteService(NoteRepository noteRepository) {
         this.noteRepository = noteRepository;
     }
 
-    public List<Note> getAll() { return noteRepository.findAll(); }
+    public Page<Note> getAll(int page, int size, String sortBy, String direction) {
+        Sort sort = direction.equalsIgnoreCase("asc")
+                ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return noteRepository.findAll(pageable);
+    }
 
     public Note getById(Long id) { return noteRepository.findById(id).orElseThrow(); }
 

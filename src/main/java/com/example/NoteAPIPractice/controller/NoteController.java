@@ -17,7 +17,13 @@ public class NoteController {
     }
 
     @GetMapping
-    public List<Note> getAll() { return service.getAll(); }
+    public Page<Note> getNotes(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction) {
+        return service.getAll(page, size, sortBy, direction);
+    }
 
     @GetMapping("/{id}")
     public Note getOne(@PathVariable Long id) { return service.getById(id); }
