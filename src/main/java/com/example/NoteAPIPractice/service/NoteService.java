@@ -5,6 +5,7 @@ import com.example.NoteAPIPractice.repository.NoteRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NoteService {
@@ -23,12 +24,18 @@ public class NoteService {
 
     public Note update(Long id, Note updatedNote) {
         Note note = noteRepository.findById(id).orElseThrow();
-        note.setName(updatedNote.getName());
+        note.setTitle(updatedNote.getTitle());
         note.setAuthor(updatedNote.getAuthor());
         note.setContent(updatedNote.getContent());
-        note.setCreationDate(updatedNote.getCreationDate());
+        note.setCreatedAt(updatedNote.getCreatedAt());
         return noteRepository.save(note);
     }
 
     public void delete(Long id) { noteRepository.deleteById(id); }
+
+    public List<Note> findByTitle(String keyword) {
+        return noteRepository.findAll().stream()
+                .filter(note -> note.getTitle() != null && note.getTitle().toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toList());
+    }
 }

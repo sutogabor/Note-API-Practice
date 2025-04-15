@@ -19,7 +19,7 @@ public class NoteController {
     @GetMapping
     public List<Note> getAll() { return service.getAll(); }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public Note getOne(@PathVariable Long id) { return service.getById(id); }
 
     @PostMapping
@@ -32,4 +32,9 @@ public class NoteController {
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) { service.delete(id); }
+
+    @GetMapping("/search?query=term")
+    public List<Note> findByTitle(String keyword) {
+        return service.findByTitle(keyword);
+    }
 }
