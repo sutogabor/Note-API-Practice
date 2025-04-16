@@ -1,6 +1,8 @@
 package com.example.NoteAPIPractice.controller;
 
+import com.example.NoteAPIPractice.dto.NoteCreateDTO;
 import com.example.NoteAPIPractice.dto.NoteDTO;
+import com.example.NoteAPIPractice.dto.NoteUpdateDTO;
 import com.example.NoteAPIPractice.model.Note;
 import com.example.NoteAPIPractice.service.NoteService;
 import jakarta.validation.Valid;
@@ -40,11 +42,11 @@ public class NoteController {
     public Note getOne(@PathVariable Long id) { return service.getById(id); }
 
     @PostMapping
-    public Note create(@RequestBody @Valid Note note) { return service.create(note); }
+    public Note create(@RequestBody @Valid NoteCreateDTO dto) { return service.create(dto); }
 
     @PutMapping("/{id}")
-    public Note update(@PathVariable Long id, @RequestBody @Valid Note note) {
-        return service.update(id, note);
+    public Note update(@PathVariable Long id, @RequestBody @Valid NoteUpdateDTO dto) {
+        return service.update(id, dto);
     }
 
     @DeleteMapping("/{id}")

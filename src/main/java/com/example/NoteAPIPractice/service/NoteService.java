@@ -1,6 +1,8 @@
 package com.example.NoteAPIPractice.service;
 
+import com.example.NoteAPIPractice.dto.NoteCreateDTO;
 import com.example.NoteAPIPractice.dto.NoteDTO;
+import com.example.NoteAPIPractice.dto.NoteUpdateDTO;
 import com.example.NoteAPIPractice.model.Note;
 import com.example.NoteAPIPractice.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,14 +44,17 @@ public class NoteService {
 
     public Note getById(Long id) { return noteRepository.findById(id).orElseThrow(); }
 
-    public Note create(Note note) { return noteRepository.save(note); }
+    public Note create(NoteCreateDTO noteCreateDTO) {
+        Note note = new Note();
+        note.setTitle(noteCreateDTO.getTitle());
+        note.setTitle(noteCreateDTO.getContent());
+        return noteRepository.save(note);
+    }
 
-    public Note update(Long id, Note updatedNote) {
+    public Note update(Long id, NoteUpdateDTO dto) {
         Note note = noteRepository.findById(id).orElseThrow();
-        note.setTitle(updatedNote.getTitle());
-        note.setAuthor(updatedNote.getAuthor());
-        note.setContent(updatedNote.getContent());
-        note.setCreatedAt(updatedNote.getCreatedAt());
+        note.setTitle(dto.getTitle());
+        note.setContent(dto.getContent());
         return noteRepository.save(note);
     }
 
